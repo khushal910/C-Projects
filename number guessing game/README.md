@@ -1,0 +1,6 @@
+# 🎯 number-guessing-game
+In this game, the user tries to guess a number between 1 and 100, which is randomly chosen by the computer.
+
+If the user's guess does not match the computer's number, the game will provide hints (such as "Guess larger number" or "Guess smaller number") to guide the user.
+
+At the end, the program will display the total number of attempts the user made to guess the correct number.
