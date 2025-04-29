@@ -4,128 +4,122 @@
 #include <unistd.h>
 #include <string.h>
 
-void clear_screen(void);
-void print();
-void human_mode();
-void initialize_board();
-
-char tic[3][3];
-int x_score = 0, c_score = 0, Draw = 0;
-
-void initialize_board()
+#define BOARED_SIZE 3
+typedef struct
 {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            tic[i][j] = ' ';
-}
+    int computer;
+    int player;
+    int draw;
+
+} Score;
+
+int difficulty;
+Score score = {.computer = 0, .player = 0, .draw = 0};
 
 void clear_screen(void)
 {
 #ifdef _WIN32
     system("cls");
 #else
-    system("clear");
+    syatem("clear");
 #endif
 }
 
-void score_board()
+int check_win(char board[BOARED_SIZE][BOARED_SIZE], char player)
 {
-    printf("\nScore -Player X: %d, Computer: %d , Draw: %d\n", x_score, c_score, Draw);
-
-    
-}
-void print()
-{
-    //  printf("\nScore -Player X: 0, Computer: 0 , Draw: 0\n");
-    score_board();
-    printf("Tic Tac Toe\n\n");
-
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < BOARED_SIZE; i++)
     {
-        for (int j = 0; j < 3; j++)
-        {
-            printf("  %c", tic[i][j]);
-            if (j != 2)
-                printf(" |");
-        }
-        if (i == 0 || i == 1)
-            printf("\n---+---+---\n");
-    }
-}
-
-void human_value()
-{
-
-    int r, c;
-    while (1)
-    {
-        printf("\n\nPlayer X's Turn.");
-        printf("\nEnter row and column(1 - 3) for X: ");
-        scanf("%d %d", &r, &c);
-
-        char ch = '0';
-
-        if (tic[r - 1][c - 1] != ch)
-        {
-            tic[r - 1][c - 1] = 'X';
-            break;
-        }
+        if (board[i][0] == player && board[i][1] == player && board[i][2] == player)
+            return 1;
     }
 
-    clear_screen();
-    print();
-}
-
-void computer_value()
-{
-
-    while (1)
+    for (int j = 0; j < BOARED_SIZE; j++)
     {
-        int i = rand() % 3;
-        int j = rand() % 3;
-        char ch = 'X';
-        if (tic[i][j] != ch)
-        {
-            tic[i][j] = '0';
-            break;
-        }
+        if (board[0][j] == player && board[1][j] == player && board[2][j] == player)
+            return 1;
     }
-}
 
-void human_mode()
-{
-    computer_value();
+    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) || (board[0][2] == player && board[1][1] == player && board[2][0] == player))
+        return 1;
 
-    print();
-
-    human_value();
-}
-
-int main()
-{
-    int choice;
-    printf("\n\nSelect difficulty level:\n");
-    printf("1 - Human(Standere)\n2 - God (Impossible to win)\nChoice: ");
-    scanf("%d", &choice);
-
-    void initialize_board();
-    srand(time(NULL));
-
-    while (1)
-    {
-
-        clear_screen();
-
-        switch (choice)
-        {
-        case 1:
-            human_mode();
-            break;
-        case 2:
-            break;
-        default:
-            printf("\nEnter valid choice");
-        }
-    }
     return 0;
 }
+
+int draw(char board[BOARED_SIZE][BOARED_SIZE])
+{
+    for (int i = 0; i < BOARED_SIZE; i++)
+    {
+        for (int j = 0; j < BOARED_SIZE; j++)
+        {
+            if (board[i][j] == ' ')
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
+void print_board(char board[BOARED_SIZE][BOARED_SIZE])
+    {
+        clear_screen();
+        printf("\nScore - Player X: %d, Comuter: %d, Dra ws: %d ", score.player, score.computer, score.draw);
+        printf("\nTic Tec Teo\n");
+
+        for (int i = 0; i < BOARED_SIZE; i++)
+        {
+            printf("\n");
+            for (int j = 0; j < BOARED_SIZE; j++)
+            {
+                printf(" %c", board[i][j]);
+                if (j < BOARED_SIZE - 1)
+                    printf(" |");
+            }
+            if (i < BOARED_SIZE - 1)
+                printf("\n---+---+---");
+        }
+    }
+
+    void input_difficulty()
+    {
+        while (1)
+        {
+
+            printf("\nSelect difficulty level:\n");
+            printf("1 - Human(Standere)\n");
+            printf("2 - God (Impossible to win)\n");
+            printf("Enter your choice: ");
+            scanf("%d", &difficulty);
+
+            if (difficulty > 3)
+                printf("\nInccorect choice enter (1/2)");
+            else
+                break;
+        }
+    }
+
+    void play_game()
+    {
+        char board[BOARED_SIZE][BOARED_SIZE] = {
+            {' ', ' ', ' '},
+            {' ', ' ', ' '},
+            {' ', ' ', ' '}};
+        print_board(board);
+        
+    
+    }
+
+
+    int main()
+    {
+        int choice;
+        input_difficulty();
+        do{
+            play_game();
+            printf("\nPlay again? (1 for Yea, 0 fro No): ");
+            scanf("%d",&choice);
+        }
+        while (choice==1);
+        printf("\nBye Bye thanks for playing");
+
+        return 0;
+    }
