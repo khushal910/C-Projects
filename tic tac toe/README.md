@@ -1,4 +1,4 @@
-#🎮Tic-Tac-Toe Game
+<H1>#🎮Tic-Tac-Toe Game</H1>
 
 This program implements a simple two-player Tic-Tac-Toe game where one player can play against the computer. The computer can be set to two difficulty levels:
 
