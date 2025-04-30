@@ -1,5 +1,6 @@
-# 🧩 Sudoku Solver
+<H1># 🧩 Sudoku Solver</H1>
 
+Overview:
 A C-based Sudoku Solver that takes a Sudoku puzzle as input, solves it using backtracking, and displays the solved puzzle along with the time taken to solve.
 
 ## 🚀 Features
